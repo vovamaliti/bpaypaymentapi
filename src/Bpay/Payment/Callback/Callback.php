@@ -8,25 +8,21 @@ namespace Bpay\Payment\Callback;
  * Class Callback
  * @package Bpay\Payment\Callback
  */
-/**
- * Class Callback
- * @package Bpay\Payment\Callback
- */
 class Callback implements \Serializable
 {
 
     /**
-     * @var
+     * @var string
      */
     private $code;
 
     /**
-     * @var
+     * @var string
      */
     private $text;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCode()
     {
@@ -34,7 +30,7 @@ class Callback implements \Serializable
     }
 
     /**
-     * @param mixed $code
+     * @param string $code
      */
     public function setCode($code)
     {
@@ -42,7 +38,7 @@ class Callback implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getText()
     {
@@ -50,7 +46,7 @@ class Callback implements \Serializable
     }
 
     /**
-     * @param mixed $text
+     * @param string $text
      */
     public function setText($text)
     {

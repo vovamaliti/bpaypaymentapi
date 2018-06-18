@@ -7,64 +7,68 @@ namespace Bpay\Payment\Transfer;
  * Class Transfer
  * @package Bpay\Payment\Transfer
  */
-/**
- * Class Transfer
- * @package Bpay\Payment\Transfer
- */
-class Transfer implements \Serializable
+class Transfer
 {
     /**
-     * @var
+     * @var string
      */
     private $login;
 
     /**
-     * @var
+     * @var string
      */
     private $password;
 
     /**
-     * @var
+     * @var string
      */
     private $time;
 
     /**
-     * @var
+     * @var string
      */
     private $payerAccount;
 
     /**
-     * @var
+     * @var string
      */
     private $account;
 
     /**
-     * @var
+     * @var string
      */
     private $amount;
 
     /**
-     * @var
+     * @var string
      */
     private $description;
 
     /**
-     * @var
+     * @var string
      */
     private $txnId;
 
     /**
-     * @var
+     * @var bool
      */
-    private $test;
+    private $test = false;
 
     /**
-     * @var
+     * @var string
      */
     private $sign;
 
     /**
-     * @return mixed
+     * Transfer constructor.
+     */
+    public function __construct()
+    {
+        $this->setTime(date('Ymd His'));
+    }
+
+    /**
+     * @return string
      */
     public function getLogin()
     {
@@ -72,7 +76,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      */
     public function setLogin($login)
     {
@@ -80,7 +84,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword()
     {
@@ -88,7 +92,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      */
     public function setPassword($password)
     {
@@ -96,7 +100,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTime()
     {
@@ -104,15 +108,15 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param
+     * @param string
      */
-    public function setTime()
+    public function setTime($time)
     {
-        $this->time = date('Ymd His');
+        $this->time = $time;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPayerAccount()
     {
@@ -120,7 +124,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $payerAccount
+     * @param string $payerAccount
      */
     public function setPayerAccount($payerAccount)
     {
@@ -128,7 +132,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAccount()
     {
@@ -136,7 +140,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $account
+     * @param string $account
      */
     public function setAccount($account)
     {
@@ -144,7 +148,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAmount()
     {
@@ -152,7 +156,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $amount
+     * @param string $amount
      */
     public function setAmount($amount)
     {
@@ -160,7 +164,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDescription()
     {
@@ -168,7 +172,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $description
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -176,7 +180,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTxnId()
     {
@@ -184,7 +188,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $txnId
+     * @param string $txnId
      */
     public function setTxnId($txnId)
     {
@@ -192,15 +196,15 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getTest()
+    public function isTest()
     {
         return $this->test;
     }
 
     /**
-     * @param mixed $test
+     * @param bool $test
      */
     public function setTest($test)
     {
@@ -208,7 +212,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSign()
     {
@@ -216,7 +220,7 @@ class Transfer implements \Serializable
     }
 
     /**
-     * @param mixed $sign
+     * @param string $sign
      */
     public function setSign($sign)
     {
@@ -225,14 +229,12 @@ class Transfer implements \Serializable
 
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
+     * Array representation of object
+     * @return array
      */
-    public function serialize()
+    public function toArray()
     {
-        return serialize([
+        return [
             'auth' => [
                 'login' => $this->login,
                 'password' => $this->password,
@@ -244,28 +246,11 @@ class Transfer implements \Serializable
                 'amount' => $this->amount,
                 'description' => $this->description,
                 'txnid' => $this->txnId,
-                'test' => $this->test
+                'test' => $this->test ? '1' : '0'
             ],
             [
                 'sign' => $this->sign
             ]
-
-
-
-        ]);
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
+        ];
     }
 }

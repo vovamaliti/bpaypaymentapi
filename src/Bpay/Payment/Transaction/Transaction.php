@@ -7,34 +7,30 @@ namespace Bpay\Payment\Transaction;
  * Class Transaction
  * @package Bpay\Payment\Transaction
  */
-/**
- * Class Transaction
- * @package Bpay\Payment\Transaction
- */
-class Transaction implements \Serializable
+class Transaction
 {
     /**
-     * @var
+     * @var string
      */
     private $login;
 
     /**
-     * @var
+     * @var string
      */
     private $password;
 
     /**
-     * @var
+     * @var string
      */
     private $transId;
 
     /**
-     * @var
+     * @var string
      */
     private $receipt;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLogin()
     {
@@ -42,7 +38,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      */
     public function setLogin($login)
     {
@@ -50,7 +46,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword()
     {
@@ -58,7 +54,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      */
     public function setPassword($password)
     {
@@ -66,7 +62,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTransId()
     {
@@ -74,7 +70,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @param mixed $transId
+     * @param string $transId
      */
     public function setTransId($transId)
     {
@@ -82,7 +78,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getReceipt()
     {
@@ -90,7 +86,7 @@ class Transaction implements \Serializable
     }
 
     /**
-     * @param mixed $receipt
+     * @param string $receipt
      */
     public function setReceipt($receipt)
     {
@@ -99,14 +95,12 @@ class Transaction implements \Serializable
 
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
+     * Array representation of object
+     * @return array
      */
-    public function serialize()
+    public function toArray()
     {
-        return serialize([
+        return [
             'auth' => [
                 'login' => $this->login,
                 'password' => $this->password,
@@ -114,20 +108,6 @@ class Transaction implements \Serializable
             'transid' =>$this->transId,
             'receipt' =>$this->receipt
 
-        ]);
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
+        ];
     }
 }
