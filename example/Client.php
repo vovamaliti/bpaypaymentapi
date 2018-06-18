@@ -8,7 +8,6 @@ use Bpay\Payment\Transaction\Transaction;
 
 //check
 $check = new Check();
-$check->setType('1.2');
 $check->setMerchantId('merchantId');
 $check->setAmount('0.1');
 $check->setDescription('some description');
@@ -20,11 +19,10 @@ $check->setCallbackUrl('http://yourdomain.com');
 $check->setLang('ru');
 $check->setAdvanced1('221B Baker Street');
 $check->setAdvanced2('');
-$check->setIsTest('1'); //0 - real payment, 1 - test payment
-$data = $check->serialize();
+$check->setTest(true); //false - real payment(by default), true - test payment
 
 $payment = new Payment();
-$result = $payment->check('https://www.bpay.md/user-api/payment1', $data, 'thaM8aiy');
+$result = $payment->check('https://www.bpay.md/user-api/payment1', $check, 'thaM8aiy');
 
 
 
@@ -45,10 +43,9 @@ $transaction->setPassword('2345234');
 //$transaction->setTransId('4767606'); //or
 $transaction->setReceipt('106853870569593');
 
-$transactionData = $transaction->serialize();
 
 $payment1 = new Payment();
-$result = $payment1->getTransactionInfo('https://www.bpay.md/user-api/checkstate1', $transactionData);
+$result = $payment1->getTransactionInfo('https://www.bpay.md/user-api/checkstate1', $transaction);
 
 
 
@@ -63,27 +60,23 @@ $paymentHistory->setState('30');
 $paymentHistory->setService('');
 $paymentHistory->setDateType('');
 
-
-$paymentHistoryResult = $paymentHistory->serialize();
 //var_dump($paymentHistoryResult);
 $payment3 = new Payment();
-$result  = $payment3->getPaymentHistory('https://www.bpay.md/user-api/getpaymentshistory',$paymentHistoryResult);
+$result  = $payment3->getPaymentHistory('https://www.bpay.md/user-api/getpaymentshistory',$paymentHistory);
 
 
 
 $transfer = new \Bpay\Payment\Transfer\Transfer();
-$transfer->setLogin('');
-$transfer->setPassword('admin@admin.com');
-$transfer->setTime();
+$transfer->setLogin('admin@admin.com');
+$transfer->setPassword('password123');
 $transfer->setPayerAccount('1174234398916');
 $transfer->setAccount('111172342894');
 $transfer->setAmount('1');
 $transfer->setDescription('test payment');
 $transfer->setTxnId(rand(1,1000));
-$transfer->setTest('1');
+$transfer->setTest(true);
 $transfer->setSign('');
 
-$transfer->serialize();
 
 $paymentTransfer = new  Payment();
 $paymentTransfer->transfer('https://www.bpay.md/user-api/transfer',$transfer,'');

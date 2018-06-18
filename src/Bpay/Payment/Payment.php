@@ -3,6 +3,10 @@
 
 namespace Bpay\Payment;
 
+use Bpay\Payment\Check\Check;
+use Bpay\Payment\PaymentHistory\PaymentHistory;
+use Bpay\Payment\Transaction\Transaction;
+use Bpay\Payment\Transfer\Transfer;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use LSS\Array2XML;
@@ -22,7 +26,7 @@ class Payment implements PaymentInterface
     protected $client;
 
     /**
-     * @var
+     * @var Res
      */
     protected $res;
 
@@ -38,17 +42,16 @@ class Payment implements PaymentInterface
     }
 
     /**
-     * @param $url
-     * @param $data
-     * @param $signature
+     * @param string $url
+     * @param Check $check
+     * @param string $signature
      * @return mixed
      */
-    public function check($url, $data, $signature)
+    public function check($url, $check, $signature)
     {
-        $arr = unserialize($data);
-        if (filter_var($url, FILTER_VALIDATE_URL) && is_array($arr)) {
+        if ($check instanceof Check && filter_var($url, FILTER_VALIDATE_URL)) {
 
-            $xml = Array2XML::createXML('payment', $arr);
+            $xml = Array2XML::createXML('payment', $check->toArray());
             $xmlData = $xml->saveXML();
             $xmlData = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $xmlData);
             $dataResult = base64_encode($xmlData);
@@ -74,26 +77,25 @@ class Payment implements PaymentInterface
     }
 
     /**
-     * @param $key
-     * @param $data
-     * @param $signature
-     * @return mixed
+     * @param string $key
+     * @param string $data
+     * @param string $signature
+     * @return string|bool XML string, or false if an error occurred
      */
     public function getCheckInfo($key, $data, $signature)
     {
         if (!empty($key) && !empty($data) && !empty($signature)) {
-            $arrayResponse = [];
             $xmlData = base64_decode($data);
             $vrfsign = md5(md5($xmlData) . md5($signature));
-            if ($key == $vrfsign) {
+            if ($key === $vrfsign) {
                 $xml = simplexml_load_string($xmlData);
                 switch ($xml) {
-                    case (string)$xml->comand == 'check':
+                    case (string)$xml->comand === 'check':
                         $arrayResponse = ['code' => '50', 'text' => 'not exist'];
                         $xml = Array2XML::createXML('result', $arrayResponse);
                         return $xml->saveXML();
                         break;
-                    case (string)$xml->comand == 'pay';
+                    case (string)$xml->comand === 'pay';
                         $arrayResponse = ['code' => '100', 'text' => 'success'];
                         $xml = Array2XML::createXML('result', $arrayResponse);
                         return $xml->saveXML();
@@ -115,17 +117,25 @@ class Payment implements PaymentInterface
     }
 
     /**
-     * @param $url
-     * @param $data
-     * @param $key
-     * @return mixed
+     * @param string $url
+     * @param Transfer $transfer
+     * @param string $key
+     * @return string|bool
      */
-    public function transfer($url, $data, $key)
+    public function transfer($url, $transfer, $key)
     {
-        $arr = unserialize($data);
-        if (filter_var($url, FILTER_VALIDATE_URL) && is_array($arr)) {
-            $sign = md5($arr['time'] . $arr['$payer_account'] . $arr['$account'] . $arr['$amount'] . $arr['$description'] . $arr['$txnid'] . $arr['$test'] . $key);
-            $xml = Array2XML::createXML('request', $arr);
+        if ($transfer instanceof Transfer && filter_var($url, FILTER_VALIDATE_URL)) {
+            $isTest = $transfer->isTest() ? '1' : '0';
+            $sign = md5(
+                $transfer->getTime() .
+                $transfer->getPayerAccount() .
+                $transfer->getAccount() .
+                $transfer->getAmount() .
+                $transfer->getDescription() .
+                $transfer->getTxnId() .
+                $isTest .
+                $key);
+            $xml = Array2XML::createXML('request', $transfer->toArray());
             $xmlData = $xml->saveXML();
 
             try {
@@ -147,15 +157,14 @@ class Payment implements PaymentInterface
     }
 
     /**
-     * @param $url
-     * @param $data
-     * @return mixed
+     * @param string $url
+     * @param Transaction $transaction
+     * @return string|bool
      */
-    public function getTransactionInfo($url, $data)
+    public function getTransactionInfo($url, $transaction)
     {
-        $arr = unserialize($data);
-        if (filter_var($url, FILTER_VALIDATE_URL) && is_array($arr)) {
-            $xml = Array2XML::createXML('request', $arr);
+        if ($transaction instanceof Transaction && filter_var($url, FILTER_VALIDATE_URL)) {
+            $xml = Array2XML::createXML('request', $transaction->toArray());
             $xmlData = $xml->saveXML();
             $xmlData = str_replace('<auth>', '<auth type="1">', $xmlData);
 
@@ -170,16 +179,14 @@ class Payment implements PaymentInterface
     }
 
     /**
-     * @param $url
-     * @param $data
-     * @return mixed
+     * @param string $url
+     * @param PaymentHistory $paymentHistory
+     * @return string|bool
      */
-    public function getPaymentHistory($url, $data)
+    public function getPaymentHistory($url, $paymentHistory)
     {
-        $arr = unserialize($data);
-
-        if (filter_var($url, FILTER_VALIDATE_URL) && is_array($arr)) {
-            $xml = Array2XML::createXML('request', $arr);
+        if ($paymentHistory instanceof PaymentHistory && filter_var($url, FILTER_VALIDATE_URL)) {
+            $xml = Array2XML::createXML('request', $paymentHistory->toArray());
             $xmlData = $xml->saveXML();
             $xmlData = str_replace('<auth>', '<auth type="1">', $xmlData);
 
@@ -188,11 +195,7 @@ class Payment implements PaymentInterface
             ]);
 
             return $this->res->toJson(simplexml_load_string($response->getBody()->getContents()));
-
         }
         return false;
     }
-
-
 }
-

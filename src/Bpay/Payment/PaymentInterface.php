@@ -7,14 +7,6 @@ namespace Bpay\Payment;
  * Interface PaymentInterface
  * @package Bpay\Payment
  */
-/**
- * Interface PaymentInterface
- * @package Bpay\Payment
- */
-/**
- * Interface PaymentInterface
- * @package Bpay\Payment
- */
 interface PaymentInterface
 {
 
@@ -58,6 +50,4 @@ interface PaymentInterface
      * @return mixed
      */
     public function getPaymentHistory($url, $data);
-
-
 }

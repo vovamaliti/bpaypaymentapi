@@ -3,7 +3,6 @@
 
 namespace Bpay\Payment\Response;
 
-use GuzzleHttp;
 
 /**
  * Class Response
@@ -12,20 +11,12 @@ use GuzzleHttp;
 class Response
 {
     /**
-     * Response constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * @param $data
      * @return string
      */
     public function toJson($data)
     {
-        $result = GuzzleHttp\json_encode($data);
-           return $result;
+        return json_encode($data);
     }
 
 }

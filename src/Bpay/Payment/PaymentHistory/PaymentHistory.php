@@ -7,50 +7,50 @@ namespace Bpay\Payment\PaymentHistory;
  * Class PaymentHistory
  * @package Bpay\Payment\PaymentHistory
  */
-class PaymentHistory implements \Serializable
+class PaymentHistory
 {
     /**
-     * @var
+     * @var string
      */
     private $login;
 
     /**
-     * @var
+     * @var string
      */
     private $password;
 
     /**
-     * @var
+     * @var string
      */
     private $account;
 
     /**
-     * @var
+     * @var string
      */
     private $dateStart;
 
     /**
-     * @var
+     * @var string
      */
     private $dateEnd;
 
     /**
-     * @var
+     * @var string
      */
     private $state;
 
     /**
-     * @var
+     * @var string
      */
     private $service;
 
     /**
-     * @var
+     * @var string
      */
     private $dateType;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLogin()
     {
@@ -58,7 +58,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      */
     public function setLogin($login)
     {
@@ -66,7 +66,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword()
     {
@@ -74,7 +74,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      */
     public function setPassword($password)
     {
@@ -82,7 +82,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAccount()
     {
@@ -90,7 +90,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @param mixed $account
+     * @param string $account
      */
     public function setAccount($account)
     {
@@ -98,7 +98,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDateStart()
     {
@@ -130,7 +130,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getState()
     {
@@ -138,7 +138,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @param mixed $state
+     * @param string $state
      */
     public function setState($state)
     {
@@ -146,7 +146,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getService()
     {
@@ -154,7 +154,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @param mixed $service
+     * @param string $service
      */
     public function setService($service)
     {
@@ -162,7 +162,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDateType()
     {
@@ -170,7 +170,7 @@ class PaymentHistory implements \Serializable
     }
 
     /**
-     * @param mixed $dateType
+     * @param string $dateType
      */
     public function setDateType($dateType)
     {
@@ -179,14 +179,12 @@ class PaymentHistory implements \Serializable
 
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
+     * Array representation of object
+     * @return array
      */
-    public function serialize()
+    public function toArray()
     {
-        return serialize([
+        return [
             'auth' => [
                 'login' => $this->login,
                 'password' => $this->password,
@@ -197,21 +195,6 @@ class PaymentHistory implements \Serializable
             'state' => $this->state,
             'service' => $this->service,
             'date_type' => $this->dateType
-
-        ]);
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
+        ];
     }
 }

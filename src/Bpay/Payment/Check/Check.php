@@ -7,90 +7,82 @@ namespace Bpay\Payment\Check;
  * Class Check
  * @package Bpay\Payment\Check
  */
-/**
- * Class Check
- * @package Bpay\Payment\Check
- */
-/**
- * Class Check
- * @package Bpay\Payment\Check
- */
-class Check implements \Serializable
+class Check
 {
 
     /**
-     * @var
+     * @var string
      */
-    private $type;
+    private $type = '1.2';
 
     /**
-     * @var
+     * @var string
      */
     private $merchantId;
 
     /**
-     * @var
+     * @var string
      */
     private $amount;
 
     /**
-     * @var
+     * @var string
      */
     private $description;
 
     /**
-     * @var
+     * @var string
      */
     private $method;
 
     /**
-     * @var
+     * @var string
      */
     private $orderId;
 
     /**
-     * @var
+     * @var string
      */
     private $successUrl;
 
     /**
-     * @var
+     * @var string
      */
     private $failUrl;
 
     /**
-     * @var
+     * @var string
      */
     private $callbackUrl;
 
     /**
-     * @var
+     * @var string
      */
     private $lang;
 
     /**
-     * @var
+     * @var string
      */
     private $advanced1;
 
     /**
-     * @var
+     * @var string
      */
-    private $advanced2;
+    private $advanced2 = '';
 
     /**
-     * @var
+     * @var bool
      */
-    private $isTest;
+    private $isTest = false;
 
     /**
-     * @var
+     * @var bool
      */
-    private $getUrl;
+    private $getUrl = false;
 
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getType()
     {
@@ -98,7 +90,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $type
+     * @param string $type
      */
     public function setType($type)
     {
@@ -106,7 +98,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMerchantId()
     {
@@ -114,7 +106,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $merchantId
+     * @param string $merchantId
      */
     public function setMerchantId($merchantId)
     {
@@ -122,7 +114,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAmount()
     {
@@ -130,7 +122,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $amount
+     * @param string $amount
      */
     public function setAmount($amount)
     {
@@ -138,7 +130,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDescription()
     {
@@ -146,7 +138,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $description
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -154,7 +146,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMethod()
     {
@@ -162,7 +154,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $method
+     * @param string $method
      */
     public function setMethod($method)
     {
@@ -170,7 +162,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getOrderId()
     {
@@ -178,7 +170,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $orderId
+     * @param string $orderId
      */
     public function setOrderId($orderId)
     {
@@ -186,15 +178,15 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSuccesUrl()
+    public function getSuccessUrl()
     {
-        return $this->succesUrl;
+        return $this->successUrl;
     }
 
     /**
-     * @param mixed $successUrl
+     * @param string $successUrl
      */
     public function setSuccessUrl($successUrl = '')
     {
@@ -202,7 +194,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFailUrl()
     {
@@ -210,7 +202,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $failUrl
+     * @param string $failUrl
      */
     public function setFailUrl($failUrl = '')
     {
@@ -218,7 +210,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCallbackUrl()
     {
@@ -226,7 +218,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $callbackUrl
+     * @param string $callbackUrl
      */
     public function setCallbackUrl($callbackUrl = '')
     {
@@ -234,7 +226,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLang()
     {
@@ -242,7 +234,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $lang
+     * @param string $lang
      */
     public function setLang($lang)
     {
@@ -250,7 +242,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAdvanced1()
     {
@@ -258,7 +250,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $advanced1
+     * @param string $advanced1
      */
     public function setAdvanced1($advanced1)
     {
@@ -266,7 +258,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAdvanced2()
     {
@@ -274,7 +266,7 @@ class Check implements \Serializable
     }
 
     /**
-     * @param mixed $advanced2
+     * @param string $advanced2
      */
     public function setAdvanced2($advanced2)
     {
@@ -282,31 +274,45 @@ class Check implements \Serializable
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getisTest()
+    public function isTest()
     {
         return $this->isTest;
     }
 
     /**
-     * @param mixed $isTest
+     * @param bool $isTest
      */
-    public function setIsTest($isTest)
+    public function setTest($isTest)
     {
         $this->isTest = $isTest;
     }
 
+    /**
+     * @return bool
+     */
+    public function isGetUrl()
+    {
+        return $this->getUrl;
+    }
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
+     * @param bool $getUrl
      */
-    public function serialize()
+    public function setGetUrl($getUrl)
     {
-        return serialize([
+        $this->getUrl = $getUrl;
+    }
+
+
+    /**
+     * Array representation of object
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
             'type' => $this->type,
             'merchantid' => $this->merchantId,
             'amount' => $this->amount,
@@ -319,22 +325,8 @@ class Check implements \Serializable
             'lang' => $this->lang,
             'advanced1' => $this->advanced1,
             'advanced2' => $this->advanced2,
-            'istest' => $this->isTest
-        ]);
-
-    }
-
-    /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        // TODO: Implement unserialize() method.
+            'getUrl' => $this->getUrl ? '1' : '0',
+            'istest' => $this->isTest ? '1' : '0'
+        ];
     }
 }
