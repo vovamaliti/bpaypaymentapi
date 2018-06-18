@@ -29,13 +29,12 @@ interface PaymentInterface
 
 
     /**
-     * @param $url
      * @param $key
      * @param $data
      * @param $signature
      * @return mixed
      */
-    public function getCheckInfo($key,$data, $signature);
+    public function getCheckInfo($key, $data, $signature);
 
     /**
      * @param $url

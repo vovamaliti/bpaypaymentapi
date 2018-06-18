@@ -236,7 +236,6 @@ class Transfer implements \Serializable
             'auth' => [
                 'login' => $this->login,
                 'password' => $this->password,
-
             ],
             'transfer' => [
                 'time' => $this->time,

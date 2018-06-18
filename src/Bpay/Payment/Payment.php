@@ -135,6 +135,7 @@ class Payment implements PaymentInterface
                         'key' => $sign,
                     ]
                 ]);
+
                 return $this->res->toJson(simplexml_load_string($response->getBody()->getContents()));
 
             } catch (GuzzleException $exception) {
@@ -175,7 +176,6 @@ class Payment implements PaymentInterface
      */
     public function getPaymentHistory($url, $data)
     {
-
         $arr = unserialize($data);
 
         if (filter_var($url, FILTER_VALIDATE_URL) && is_array($arr)) {
@@ -186,6 +186,7 @@ class Payment implements PaymentInterface
             $response = $this->client->post($url, [
                 'body' => $xmlData
             ]);
+
             return $this->res->toJson(simplexml_load_string($response->getBody()->getContents()));
 
         }

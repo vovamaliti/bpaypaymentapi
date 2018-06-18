@@ -190,7 +190,6 @@ class PaymentHistory implements \Serializable
             'auth' => [
                 'login' => $this->login,
                 'password' => $this->password,
-
             ],
             'account' => $this->account,
             'date_start' => $this->dateStart,

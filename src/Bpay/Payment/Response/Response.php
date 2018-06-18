@@ -25,7 +25,6 @@ class Response
     public function toJson($data)
     {
         $result = GuzzleHttp\json_encode($data);
-//           $result = json_encode($data);
            return $result;
     }
 

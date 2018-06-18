@@ -68,7 +68,6 @@ class Callback implements \Serializable
         return serialize([
             'code' => $this->code,
             'text' => $this->text,
-
         ]);
 
     }
