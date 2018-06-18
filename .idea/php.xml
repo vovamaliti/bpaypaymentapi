@@ -45,4 +45,9 @@
       <interpreter home="$USER_HOME$/.PhpStorm2018.1/system/plugins/idea-php-latest-plugin/php-v7.2.6/php.sh" id="d01c210f-b7df-40d3-be95-0a3c5b4d9a50" name="PHP latest" debugger_id="php.debugger.XDebug" />
     </interpreters>
   </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
 </project>
