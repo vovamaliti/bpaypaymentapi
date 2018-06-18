@@ -7,7 +7,7 @@
     "payment",
     "bpay"
   ],
-  "type": "library",
+  "type": "package",
   "require": {
     "php": ">=5.6",
     "guzzlehttp/guzzle": "~6.0",
@@ -32,5 +32,6 @@
       "name": "VR Dev Team",
       "email": "tv@vr-dev.team"
     }
-  ]
+  ],
+  "version": "1.0.0"
 }
