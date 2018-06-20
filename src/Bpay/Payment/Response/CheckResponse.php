@@ -75,11 +75,12 @@ class CheckResponse extends Response
      */
     public static function fromXml($xml)
     {
+        $array = self::xml2array($xml);
         $response = new self();
-        $response->setCode($xml->code->__toString());
-        $response->setMessage($xml->message->__toString());
-        $response->setUrl($xml->url->__toString());
-        $response->setParams((array)$xml->params);
+        $response->setCode($array['code']);
+        $response->setMessage($array['message']);
+        $response->setUrl($array['url']);
+        $response->setParams($array['params']);
 
         return $response;
     }

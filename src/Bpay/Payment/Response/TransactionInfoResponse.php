@@ -58,8 +58,6 @@ class TransactionInfoResponse extends Response
         foreach ($xml->params->children() as $item) {
             $params[(string)$item[0]['name']] = (string)$item[0];
         }
-
-
         $response->setCode($xml->code->__toString());
         $response->setText($xml->text->__toString());
         $response->setParams($params);

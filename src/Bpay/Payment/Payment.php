@@ -6,6 +6,7 @@ namespace Bpay\Payment;
 use Bpay\Payment\Check\Check;
 use Bpay\Payment\PaymentHistory\PaymentHistory;
 use Bpay\Payment\Response\CheckResponse;
+use Bpay\Payment\Response\PaymentHistoryResponse;
 use Bpay\Payment\Response\TransactionInfoResponse;
 use Bpay\Payment\Transaction\Transaction;
 use Bpay\Payment\Transfer\Transfer;
@@ -178,7 +179,7 @@ class Payment implements PaymentInterface
     /**
      * @param string $url
      * @param PaymentHistory $paymentHistory
-     * @return string|bool
+     * @return PaymentHistoryResponse
      */
     public function getPaymentHistory($url, $paymentHistory)
     {
@@ -191,8 +192,8 @@ class Payment implements PaymentInterface
                 'body' => $xmlData
             ]);
 
-            return $this->res->toJson(simplexml_load_string($response->getBody()->getContents()));
+            return PaymentHistoryResponse::fromXml(simplexml_load_string($response->getBody()->getContents()));
         }
-        return false;
+        return new PaymentHistoryResponse();
     }
 }

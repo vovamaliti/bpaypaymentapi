@@ -47,5 +47,14 @@ class Response
     {
         return $this->getCode() === '100';
     }
+
+    /**
+     * @param $xml
+     * @return array
+     */
+    public static function xml2array($xml)
+    {
+        return json_decode(json_encode((array)$xml), TRUE);
+    }
 }
 
