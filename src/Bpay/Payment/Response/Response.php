@@ -11,6 +11,27 @@ namespace Bpay\Payment\Response;
 class Response
 {
     /**
+     * @var string
+     */
+    private $code;
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
      * @param $data
      * @return string
      */
@@ -19,5 +40,21 @@ class Response
         return json_encode($data);
     }
 
+    /**
+     * @return bool
+     */
+    public function isSuccess()
+    {
+        return $this->getCode() === '100';
+    }
+
+    /**
+     * @param $xml
+     * @return array
+     */
+    public static function xml2array($xml)
+    {
+        return json_decode(json_encode((array)$xml), TRUE);
+    }
 }
 

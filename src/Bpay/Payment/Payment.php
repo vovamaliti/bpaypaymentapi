@@ -5,6 +5,9 @@ namespace Bpay\Payment;
 
 use Bpay\Payment\Check\Check;
 use Bpay\Payment\PaymentHistory\PaymentHistory;
+use Bpay\Payment\Response\CheckResponse;
+use Bpay\Payment\Response\PaymentHistoryResponse;
+use Bpay\Payment\Response\TransactionInfoResponse;
 use Bpay\Payment\Transaction\Transaction;
 use Bpay\Payment\Transfer\Transfer;
 use GuzzleHttp\Client;
@@ -45,7 +48,8 @@ class Payment implements PaymentInterface
      * @param string $url
      * @param Check $check
      * @param string $signature
-     * @return mixed
+     * @return CheckResponse
+     * @throws GuzzleException
      */
     public function check($url, $check, $signature)
     {
@@ -56,24 +60,18 @@ class Payment implements PaymentInterface
             $xmlData = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $xmlData);
             $dataResult = base64_encode($xmlData);
             $sign = md5(md5($xmlData) . md5($signature));
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, true);
-            $data = [
-                'data' => $dataResult,
-                'key' => $sign,
-            ];
 
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            $output = curl_exec($ch);
-            $info = curl_getinfo($ch);
-            curl_close($ch);
+            $response = $this->client->request('POST', $url, [
+                'form_params' => [
+                    'data' => $dataResult,
+                    'key' => $sign,
+                ]
+            ]);
 
-            return $info;
+            return CheckResponse::fromXml(simplexml_load_string($response->getBody()->getContents()));
         }
 
-        return false;
+        return new CheckResponse();
     }
 
     /**
@@ -159,7 +157,7 @@ class Payment implements PaymentInterface
     /**
      * @param string $url
      * @param Transaction $transaction
-     * @return string|bool
+     * @return TransactionInfoResponse
      */
     public function getTransactionInfo($url, $transaction)
     {
@@ -172,16 +170,16 @@ class Payment implements PaymentInterface
                 'body' => $xmlData
             ]);
 
-            return $this->res->toJson(simplexml_load_string($response->getBody()->getContents()));
+            return TransactionInfoResponse::fromXml(simplexml_load_string($response->getBody()->getContents()));
 
         }
-        return false;
+        return new TransactionInfoResponse();
     }
 
     /**
      * @param string $url
      * @param PaymentHistory $paymentHistory
-     * @return string|bool
+     * @return PaymentHistoryResponse
      */
     public function getPaymentHistory($url, $paymentHistory)
     {
@@ -194,8 +192,8 @@ class Payment implements PaymentInterface
                 'body' => $xmlData
             ]);
 
-            return $this->res->toJson(simplexml_load_string($response->getBody()->getContents()));
+            return PaymentHistoryResponse::fromXml(simplexml_load_string($response->getBody()->getContents()));
         }
-        return false;
+        return new PaymentHistoryResponse();
     }
 }

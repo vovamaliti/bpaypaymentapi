@@ -78,7 +78,7 @@ class Check
     /**
      * @var bool
      */
-    private $getUrl = false;
+    private $getUrl = true;
 
 
     /**
@@ -296,15 +296,6 @@ class Check
     {
         return $this->getUrl;
     }
-
-    /**
-     * @param bool $getUrl
-     */
-    public function setGetUrl($getUrl)
-    {
-        $this->getUrl = $getUrl;
-    }
-
 
     /**
      * Array representation of object
