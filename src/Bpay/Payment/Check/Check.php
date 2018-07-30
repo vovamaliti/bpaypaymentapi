@@ -80,6 +80,10 @@ class Check
      */
     private $getUrl = true;
 
+    /**
+     * @var array
+     */
+    const LANGS = ['en', 'ro', 'ru'];
 
     /**
      * @return string
@@ -236,9 +240,9 @@ class Check
     /**
      * @param string $lang
      */
-    public function setLang($lang)
+    public function setLang($lang = null)
     {
-        $this->lang = $lang;
+        $this->lang = in_array($lang, Check::LANGS) ? $lang : Check::LANGS[0];
     }
 
     /**
